@@ -11,15 +11,19 @@ public class Auth {
 
     private static final String preferenceFileKey = "auth";
 
+    public static User loggedUser;
+
     public Auth(Context context) {
         this.context = context;
         this.sharedPref = context.getSharedPreferences(preferenceFileKey, Context.MODE_PRIVATE);
     }
 
     //Login
-    public void login(User user) {
+    public void saveUser(User user) {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt("userId", user.getId());
+        editor.putString("userName", user.getUserName());
+        editor.putString("password", user.getPassWord());
         editor.apply();
     }
 
@@ -27,6 +31,8 @@ public class Auth {
     public void logout() {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.remove("userId");
+        editor.remove("userName");
+        editor.remove("password");
         editor.apply();
     }
 
@@ -35,8 +41,19 @@ public class Auth {
     }
 
     //Check if there is saved user id
-    public boolean checkLoggedUser() {
+    public User getSavedUser() {
         final int userId = sharedPref.getInt("userId", 0);
-        return userId != 0;
+        final String userName = sharedPref.getString("userName", "");
+        final String password = sharedPref.getString("password", "");
+
+        return new User(userId, userName, password);
+    }
+
+    public void saveLoggedUser(User user) {
+        loggedUser = user;
+    }
+
+    public User getLoggedUser() {
+        return loggedUser;
     }
 }

@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.delts.shipitfixit.auth.Auth;
 import com.delts.shipitfixit.database.UsersDatabaseHelper;
 import com.delts.shipitfixit.databinding.ActivitySignInBinding;
+import com.delts.shipitfixit.models.User;
 
 
 public class SignIn extends AppCompatActivity {
@@ -57,10 +59,16 @@ public class SignIn extends AppCompatActivity {
     }
 
     private boolean signIn(String userName, String password) {
+        Auth auth = new Auth(getApplicationContext());
         UsersDatabaseHelper dbHelper = new UsersDatabaseHelper(getApplicationContext());
         final boolean response = dbHelper.checkLoginSuccess(userName, password);
 
         Toast.makeText(getApplicationContext(), response ? "Login successful" : "User doesn't exist", Toast.LENGTH_SHORT).show();
+
+        if (response) {
+            auth.saveUser(new User(0, userName, password));
+        }
+
         return response;
     }
 }

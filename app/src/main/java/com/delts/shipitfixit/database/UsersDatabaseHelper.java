@@ -38,8 +38,9 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
 
     //returns true if is already existing
     public boolean checkUsernameIfExist(String username){
-        String QUERY = "SELECT " + Entries.UserEntry.COLUMN_NAME_USERNAME + " WHERE "
-            + Entries.UserEntry.COLUMN_NAME_USERNAME + " = ?";
+        String QUERY = "SELECT " + Entries.UserEntry.COLUMN_NAME_USERNAME
+                + " FROM " + Entries.UserEntry.TABLE_NAME
+                + " WHERE " + Entries.UserEntry.COLUMN_NAME_USERNAME + " = ?";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(QUERY, new String[] {username});
 

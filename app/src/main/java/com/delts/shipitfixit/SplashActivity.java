@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.delts.shipitfixit.auth.Auth;
+import com.delts.shipitfixit.database.UsersDatabaseHelper;
+import com.delts.shipitfixit.models.User;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -29,7 +31,12 @@ public class SplashActivity extends AppCompatActivity {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(getApplicationContext(), auth.checkLoggedUser() ? MainActivity.class : SignIn.class);
+                    final UsersDatabaseHelper dbHlelper = new UsersDatabaseHelper(getApplicationContext());
+                    final User user = auth.getSavedUser();
+
+                    final boolean response = dbHlelper.checkLoginSuccess(user.getUserName(), user.getPassWord());
+
+                    Intent intent = new Intent(getApplicationContext(), response ? MainActivity.class : SignIn.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 }
