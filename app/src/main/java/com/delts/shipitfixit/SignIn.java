@@ -20,7 +20,9 @@ public class SignIn extends AppCompatActivity {
         binding = ActivitySignInBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        getSupportActionBar().hide();
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
 
         binding.loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
