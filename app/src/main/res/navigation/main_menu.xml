@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_menu">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_menu"
+    app:startDestination="@id/homeMenu">
+
+    <fragment
+        android:id="@+id/homeMenu"
+        android:name="com.delts.shipitfixit.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/accountInfoMenu"
+        android:name="com.delts.shipitfixit.AccountInfoFragment"
+        android:label="Account Info"
+        tools:layout="@layout/fragment_account_info" />
+
 
 </navigation>

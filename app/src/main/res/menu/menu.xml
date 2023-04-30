@@ -4,4 +4,9 @@
         android:id="@+id/homeMenu"
         android:title="Home"
         android:icon="@drawable/ic_home"/>
+
+    <item
+        android:id="@+id/accountInfoMenu"
+        android:title="Account Info"
+        android:icon="@drawable/ic_person"/>
 </menu>
