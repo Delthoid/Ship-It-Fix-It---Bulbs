@@ -35,7 +35,7 @@ public class Auth {
     }
 
     //Check if there is saved user id
-    public boolean checkLoggedUsers() {
+    public boolean checkLoggedUser() {
         final int userId = sharedPref.getInt("userId", 0);
         return userId != 0;
     }
