@@ -43,9 +43,10 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(QUERY, new String[] {username});
 
+        boolean success = cursor.moveToNext() ? true : false;
         db.close();
         cursor.close();
-        return cursor.moveToNext() ? true : false;
+        return success;
     }
 
     //inserting account here return false if failed
