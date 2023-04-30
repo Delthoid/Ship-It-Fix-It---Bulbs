@@ -7,6 +7,7 @@ import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
@@ -25,20 +26,25 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.menuIcon.setOnClickListener(new View.OnClickListener() {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+
+        binding.toolbar2.setNavigationIcon(R.drawable.ic_menu);
+        binding.toolbar2.setTitle("");
+        binding.toolbar2.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 binding.drawerLayout.openDrawer(GravityCompat.START);
             }
         });
 
         NavController navController = Navigation.findNavController(this, R.id.navigationController);
         NavigationUI.setupWithNavController(binding.navigationView, navController);
-
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController navController, @NonNull NavDestination navDestination, @Nullable Bundle bundle) {
-                binding.toolbarTitle.setText(navDestination.getLabel());
+                binding.toolbar2.setTitle(navDestination.getLabel());
             }
         });
     }
