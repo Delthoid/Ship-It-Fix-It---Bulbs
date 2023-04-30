@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController navController, @NonNull NavDestination navDestination, @Nullable Bundle bundle) {
-                binding.toolbarTitleTextView.setText(navDestination.getLabel());
+                binding.toolbarTitle.setText(navDestination.getLabel());
             }
         });
     }
