@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
+import com.delts.shipitfixit.database.UsersDatabaseHelper;
 import com.delts.shipitfixit.databinding.ActivitySignUpBinding;
+import com.delts.shipitfixit.models.User;
 
 public class SignUp extends AppCompatActivity {
 
@@ -34,11 +37,21 @@ public class SignUp extends AppCompatActivity {
 
                 //Mag login din dapat dito
                 if (!userName.isEmpty() || !password.isEmpty()) {
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+                    if (signUp(userName, password)) {
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
                 }
             }
         });
+    }
+
+    private boolean signUp(String userName, String password) {
+        UsersDatabaseHelper dbHelper = new UsersDatabaseHelper(getApplicationContext());
+        final boolean response = dbHelper.insertAccount(userName, password);
+
+        Toast.makeText(getApplicationContext(), response ? "Register successful" : "Failed to register", Toast.LENGTH_SHORT).show();
+        return response;
     }
 }

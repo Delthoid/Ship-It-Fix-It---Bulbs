@@ -2,10 +2,13 @@ package com.delts.shipitfixit;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
+import com.delts.shipitfixit.database.UsersDatabaseHelper;
 import com.delts.shipitfixit.databinding.ActivitySignInBinding;
 
 
@@ -30,18 +33,15 @@ public class SignIn extends AppCompatActivity {
                 final String userName = binding.usernameField.getText().toString();
                 final String password = binding.passwordField.getText().toString();
 
-                if (userName.isEmpty()) {
-                    binding.usernameField.setError("Username cannot be empty");
-                }
-
-                if (password.isEmpty()) {
-                    binding.passwordField.setError("Password cannot be empty");
-                }
+                binding.usernameField.setError(userName.isEmpty() ? "Username cannot be empty" : null);
+                binding.passwordField.setError(password.isEmpty() ? "Password cannot be empty" : null);
 
                 if (!password.isEmpty() || !userName.isEmpty()) {
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+                    if (signIn(userName, password)) {
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
                 }
             }
         });
@@ -54,5 +54,13 @@ public class SignIn extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private boolean signIn(String userName, String password) {
+        UsersDatabaseHelper dbHelper = new UsersDatabaseHelper(getApplicationContext());
+        final boolean response = dbHelper.checkLoginSuccess(userName, password);
+
+        Toast.makeText(getApplicationContext(), response ? "Login successful" : "User doesn't exist", Toast.LENGTH_SHORT).show();
+        return response;
     }
 }
