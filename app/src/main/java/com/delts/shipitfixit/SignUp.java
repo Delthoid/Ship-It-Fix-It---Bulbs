@@ -13,14 +13,14 @@ import android.widget.Toast;
 import com.delts.shipitfixit.database.UserInfoDBHelper;
 import com.delts.shipitfixit.database.UsersDatabaseHelper;
 import com.delts.shipitfixit.databinding.ActivitySignUpBinding;
-import com.delts.shipitfixit.models.User;
-import com.delts.shipitfixit.models.UserInfo;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class SignUp extends AppCompatActivity {
     private ActivitySignUpBinding binding;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,11 +31,13 @@ public class SignUp extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
+
+
         binding.birthdayPickerButtonSignUp.setText(getCurrentDate());
         binding.birthdayPickerButtonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDatePicker();
+                openDatePickerDialog();
             }
         });
 
@@ -52,6 +54,7 @@ public class SignUp extends AppCompatActivity {
                 final String reEnterPassword = binding.reEnterPasswordFieldSignUp.getText().toString();
                 final String firstname = binding.firstnameFieldSignUp.getText().toString();
                 final String lastname = binding.lastnameFieldSignUp.getText().toString();
+                final String age = binding.ageFieldSignUp.getText().toString();
                 final String birthday = binding.birthdayPickerButtonSignUp.getText().toString();
                 final String address = binding.addressFieldSignUp.getText().toString();
 
@@ -87,7 +90,7 @@ public class SignUp extends AppCompatActivity {
         return response;
     }
 
-    public void openDatePicker(){
+    public void openDatePickerDialog(){
         Calendar today = Calendar.getInstance();
         int year = today.get(Calendar.YEAR);
         int month = today.get(Calendar.MONTH);
@@ -96,9 +99,34 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 binding.birthdayPickerButtonSignUp.setText(makeStringDate(month, dayOfMonth, year));
+                binding.ageFieldSignUp.setText(Integer.toString(getComputedIntAge(makeStringDate(month, dayOfMonth, year))));
             }
         }, year, month, day);
         datePickerDialog.show();
+
+    }
+
+    public int getComputedIntAge(String birthday){
+        SimpleDateFormat format = new SimpleDateFormat("MMM-d-yyyy");
+        Date birth = null;
+        try {
+            birth = format.parse(birthday);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Calendar bDay = Calendar.getInstance();
+        bDay.setTime(birth);
+
+        Calendar today = Calendar.getInstance();
+        int age = today.get(Calendar.YEAR) - bDay.get(Calendar.YEAR);
+        if(today.get(Calendar.MONTH) < bDay.get(Calendar.MONTH)){
+            age--;
+        } else if (today.get(Calendar.MONTH) == bDay.get(Calendar.MONTH)
+                && today.get(Calendar.DAY_OF_MONTH) < bDay.get(Calendar.DAY_OF_MONTH)){
+            age--;
+        }
+        return age;
     }
 
     public String getCurrentDate(){
