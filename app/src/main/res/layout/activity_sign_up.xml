@@ -62,6 +62,102 @@
                     android:inputType="textPassword"
                     android:padding="16dp" />
 
+                <EditText
+                    android:id="@+id/reEnterPasswordFieldSignUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/rectangle"
+                    android:ems="10"
+                    android:hint="Re-Enter Password"
+                    android:inputType="textPassword"
+                    android:padding="16dp" />
+
+                <EditText
+                    android:id="@+id/firstnameFieldSignUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/rectangle"
+                    android:ems="10"
+                    android:hint="Firstname"
+                    android:inputType="textPersonName"
+                    android:padding="16dp" />
+
+                <EditText
+                    android:id="@+id/lastnameFieldSignUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/rectangle"
+                    android:ems="10"
+                    android:hint="Lastname"
+                    android:inputType="textPersonName"
+                    android:padding="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:text="Birthday: "
+                    android:gravity="center_vertical"
+                    android:textSize="20dp"/>
+                <Button
+                    android:id="@+id/birthdayPickerButtonSignUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:text="JAN-1-2023"
+                    style="?spinnerStyle" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:text="Gender: "
+                    android:gravity="center_vertical"
+                    android:textSize="20dp"/>
+
+                <Spinner
+                    android:id="@+id/genderPickerSpinnerSignUp"
+                    android:layout_width="match_parent"
+                    android:paddingLeft="7dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:contentDescription="Gender"/>
+
+            </LinearLayout>
+
+                <EditText
+                    android:id="@+id/addressFieldSignUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/rectangle"
+                    android:ems="10"
+                    android:hint="Address"
+                    android:inputType="textPersonName"
+                    android:padding="16dp" />
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

@@ -74,7 +74,6 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
 
         cursor.close();
         db.close();
-
         return success;
     }
 }

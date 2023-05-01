@@ -54,6 +54,7 @@ public class UserInfoDBHelper extends SQLiteOpenHelper {
 
         long insertSuccess = db.insert(Entries.UserEntry.TABLE_USER_INFO, null, cv);
 
+        db.close();
         return insertSuccess != -1;
     }
 
@@ -80,6 +81,8 @@ public class UserInfoDBHelper extends SQLiteOpenHelper {
                 userInfos.add(userInfo);
             }
         }
+        db.close();
+        cursor.close();
         return userInfos;
     }
 }
