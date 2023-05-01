@@ -37,7 +37,7 @@ public class SplashActivity extends AppCompatActivity {
                     final boolean response = dbHlelper.checkLoginSuccess(user.getUserName(), user.getPassWord());
 
                     Intent intent = new Intent(getApplicationContext(), response ? MainActivity.class : SignIn.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }
             }, SPLASH_TIME);

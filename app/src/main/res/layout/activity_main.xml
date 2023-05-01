@@ -22,7 +22,7 @@
             android:id="@+id/navigationController"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="670dp"
             android:layout_marginTop="?actionBarSize"
             app:defaultNavHost="true"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -36,5 +36,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         app:menu="@menu/menu"
-        android:layout_gravity="start"/>
+        android:layout_gravity="start">
+    </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -10,8 +10,11 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.delts.shipitfixit.auth.Auth;
 import com.delts.shipitfixit.databinding.ActivityMainBinding;
@@ -47,5 +50,14 @@ public class MainActivity extends AppCompatActivity {
                 binding.toolbar2.setTitle(navDestination.getLabel());
             }
         });
+    }
+    //Used to clear shared preference and logout the application
+    public void Logout(MenuItem item){
+        Auth auth = new Auth(getApplicationContext());
+        auth.logout();
+        Intent intent = new Intent(getApplicationContext(), SignIn.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        Toast.makeText(getApplicationContext(), "Successfully logged out", Toast.LENGTH_SHORT).show();
     }
 }
