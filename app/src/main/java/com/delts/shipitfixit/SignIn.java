@@ -38,7 +38,7 @@ public class SignIn extends AppCompatActivity {
                 binding.usernameField.setError(userName.isEmpty() ? "Username cannot be empty" : null);
                 binding.passwordField.setError(password.isEmpty() ? "Password cannot be empty" : null);
 
-                if (!password.isEmpty() || !userName.isEmpty()) {
+                if (!password.isEmpty() && !userName.isEmpty()) {
                     if (signIn(userName, password)) {
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

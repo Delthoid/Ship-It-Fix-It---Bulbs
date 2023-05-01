@@ -68,18 +68,18 @@ public class UserInfoDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(SELECT_QUERY, new String[] {username});
 
-        if(cursor.moveToFirst()){
-            while (cursor.moveToNext()){
-                UserInfo userInfo = new UserInfo();
-                userInfo.setUsername(cursor.getString(cursor.getColumnIndexOrThrow(Entries.UserEntry.COLUMN_USERNAME)));
-                userInfo.setFirstname(cursor.getString(cursor.getColumnIndexOrThrow(Entries.UserEntry.COLUMN_FIRSTNAME)));
-                userInfo.setLastname(cursor.getString(cursor.getColumnIndexOrThrow(Entries.UserEntry.COLUMN_LASTNAME)));
-                userInfo.setBirthday(cursor.getString(cursor.getColumnIndexOrThrow(Entries.UserEntry.COLUMN_BIRTHDAY)));
-                userInfo.setAge(cursor.getInt(cursor.getColumnIndexOrThrow(Entries.UserEntry.COLUMN_AGE)));
-                userInfo.setGender(cursor.getString(cursor.getColumnIndexOrThrow(Entries.UserEntry.COLUMN_GENDER)));
-                userInfo.setAddress(cursor.getString(cursor.getColumnIndexOrThrow(Entries.UserEntry.COLUMN_ADDRESS)));
-                userInfos.add(userInfo);
-            }
+        while (cursor.moveToNext()){
+            UserInfo userInfo = new UserInfo();
+
+            userInfo.setId(cursor.getInt(cursor.getColumnIndexOrThrow(Entries.UserEntry.COLUMN_USER_ID)));
+            userInfo.setUsername(cursor.getString(cursor.getColumnIndexOrThrow(Entries.UserEntry.COLUMN_USERNAME)));
+            userInfo.setFirstname(cursor.getString(cursor.getColumnIndexOrThrow(Entries.UserEntry.COLUMN_FIRSTNAME)));
+            userInfo.setLastname(cursor.getString(cursor.getColumnIndexOrThrow(Entries.UserEntry.COLUMN_LASTNAME)));
+            userInfo.setBirthday(cursor.getString(cursor.getColumnIndexOrThrow(Entries.UserEntry.COLUMN_BIRTHDAY)));
+            userInfo.setAge(cursor.getInt(cursor.getColumnIndexOrThrow(Entries.UserEntry.COLUMN_AGE)));
+            userInfo.setGender(cursor.getString(cursor.getColumnIndexOrThrow(Entries.UserEntry.COLUMN_GENDER)));
+            userInfo.setAddress(cursor.getString(cursor.getColumnIndexOrThrow(Entries.UserEntry.COLUMN_ADDRESS)));
+            userInfos.add(userInfo);
         }
         db.close();
         cursor.close();
