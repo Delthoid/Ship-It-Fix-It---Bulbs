@@ -10,19 +10,17 @@ import androidx.annotation.Nullable;
 
 public class UsersDatabaseHelper extends SQLiteOpenHelper {
 
-
-    public static final String DB_NAME = "Users.db";
     public static final int DB_VERSION = 1;
 
     //Queries
     private static final String SQL_CREATE_DB =
-            "CREATE TABLE " + Entries.UserEntry.TABLE_NAME + "(" +
+            "CREATE TABLE " + Entries.UserEntry.TABLE_USERS + "(" +
             Entries.UserEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            Entries.UserEntry.COLUMN_NAME_USERNAME + " TEXT," +
-            Entries.UserEntry.COLUMN_NAME_PASSWORD + " TEXT)";
+            Entries.UserEntry.COLUMN_USERNAME + " TEXT," +
+            Entries.UserEntry.COLUMN_PASSWORD + " TEXT)";
 
     public UsersDatabaseHelper(@Nullable Context context) {
-        super(context, DB_NAME, null, DB_VERSION);
+        super(context, Entries.UserEntry.DB_NAME, null, DB_VERSION);
     }
 
     @Override
@@ -32,15 +30,15 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        String onUpgrade = "DROP TABLE IF EXISTS " + Entries.UserEntry.TABLE_NAME;
+        String onUpgrade = "DROP TABLE IF EXISTS " + Entries.UserEntry.TABLE_USERS;
         db.execSQL(onUpgrade);
     }
 
     //returns true if is already existing
     public boolean checkUsernameIfExist(String username){
-        String QUERY = "SELECT " + Entries.UserEntry.COLUMN_NAME_USERNAME
-                + " FROM " + Entries.UserEntry.TABLE_NAME
-                + " WHERE " + Entries.UserEntry.COLUMN_NAME_USERNAME + " = ?";
+        String QUERY = "SELECT " + Entries.UserEntry.COLUMN_USERNAME
+                + " FROM " + Entries.UserEntry.TABLE_USERS
+                + " WHERE " + Entries.UserEntry.COLUMN_USERNAME + " = ?";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(QUERY, new String[] {username});
 
@@ -54,9 +52,9 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
     public boolean insertAccount(String username, String password){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(Entries.UserEntry.COLUMN_NAME_USERNAME, username);
-        cv.put(Entries.UserEntry.COLUMN_NAME_PASSWORD, password);
-        long result = db.insert(Entries.UserEntry.TABLE_NAME, null, cv);
+        cv.put(Entries.UserEntry.COLUMN_USERNAME, username);
+        cv.put(Entries.UserEntry.COLUMN_PASSWORD, password);
+        long result = db.insert(Entries.UserEntry.TABLE_USERS, null, cv);
 
         boolean success = result != -1 ? true : false;
         db.close();
@@ -65,10 +63,10 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
 
     //returns true if username and password matches together
     public boolean checkLoginSuccess(String username, String password){
-        String QUERY = "SELECT " + Entries.UserEntry.COLUMN_NAME_USERNAME + ", "
-                + Entries.UserEntry.COLUMN_NAME_PASSWORD + " FROM " + Entries.UserEntry.TABLE_NAME
-                + " WHERE " + Entries.UserEntry.COLUMN_NAME_USERNAME + " = ? AND "
-                + Entries.UserEntry.COLUMN_NAME_PASSWORD + " = ? ";
+        String QUERY = "SELECT " + Entries.UserEntry.COLUMN_USERNAME + ", "
+                + Entries.UserEntry.COLUMN_PASSWORD + " FROM " + Entries.UserEntry.TABLE_USERS
+                + " WHERE " + Entries.UserEntry.COLUMN_USERNAME + " = ? AND "
+                + Entries.UserEntry.COLUMN_PASSWORD + " = ? ";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(QUERY, new String[] {username, password});
 
