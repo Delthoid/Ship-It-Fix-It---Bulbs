@@ -20,7 +20,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
             Entries.UserEntry.COLUMN_PASSWORD + " TEXT)";
 
     public UsersDatabaseHelper(@Nullable Context context) {
-        super(context, Entries.UserEntry.DB_NAME, null, DB_VERSION);
+        super(context, Entries.UserEntry.DB_USERS, null, DB_VERSION);
     }
 
     @Override

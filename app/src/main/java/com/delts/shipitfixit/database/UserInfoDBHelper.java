@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class UserInfoDBHelper extends SQLiteOpenHelper {
     public UserInfoDBHelper(@Nullable Context context) {
-        super(context, Entries.UserEntry.DB_NAME, null, 1);
+        super(context, Entries.UserEntry.DB_USER_INFO, null, 1);
     }
 
     @Override

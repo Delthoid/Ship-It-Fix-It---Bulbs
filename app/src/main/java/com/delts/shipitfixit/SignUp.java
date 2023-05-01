@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.Toast;
@@ -19,7 +20,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class SignUp extends AppCompatActivity {
+public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    private String gender;
     private ActivitySignUpBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class SignUp extends AppCompatActivity {
                 R.array.gender, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.genderPickerSpinnerSignUp.setAdapter(adapter);
+        binding.genderPickerSpinnerSignUp.setOnItemSelectedListener(this);
 
         binding.resgisterButtonSignup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,14 +70,32 @@ public class SignUp extends AppCompatActivity {
                 //Mag login din dapat dito
                 if (!userName.isEmpty() && !password.isEmpty() && !reEnterPassword.isEmpty() && !firstname.isEmpty()
                     && !lastname.isEmpty() && !address.isEmpty()) {
-                    if(birthday.equals(getCurrentDate())){
-                        Toast.makeText(getApplicationContext(), "Please set your birthday", Toast.LENGTH_SHORT).show();
-                    } else{
-                        if (signUp(userName, password)) {
-                            UserInfoDBHelper userInfoDBHelper = new UserInfoDBHelper(getApplicationContext());
-                            Intent intent = new Intent(getApplicationContext(), SignIn.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
+                    UserInfoDBHelper userInfoDBHelper = new UserInfoDBHelper(getApplicationContext());
+                    UsersDatabaseHelper usersDBHelper = new UsersDatabaseHelper(getApplicationContext());
+                    if(usersDBHelper.checkUsernameIfExist(userName)){
+                       binding.usernameFieldSignup.setError("Username already exists");
+                       Toast.makeText(getApplicationContext(), "Username already in use", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if(birthday.equals(getCurrentDate())) {
+                            Toast.makeText(getApplicationContext(), "Please set your birthday", Toast.LENGTH_SHORT).show();
+                        } else if(Integer.parseInt(age) < 18) {
+                            Toast.makeText(getApplicationContext(), "You must be at least 18 years old", Toast.LENGTH_SHORT).show();
+                        } else if(gender.equals("Gender")){
+                            Toast.makeText(getApplicationContext(), "Please set your gender", Toast.LENGTH_SHORT).show();
+                        } else{
+                            if(!password.equals(reEnterPassword)){
+                                binding.reEnterPasswordFieldSignUp.setError("Passwords doesn't match");
+                            } else{
+                                //insertAccount
+                                if (signUp(userName, password)) {
+                                    //insertUserInfo
+                                    userInfoDBHelper.insertUserInfo(userName, firstname, lastname, birthday, Integer.parseInt(age), gender, address);
+
+                                    Intent intent = new Intent(getApplicationContext(), SignIn.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                }
+                            }
                         }
                     }
                 }
@@ -169,5 +190,15 @@ public class SignUp extends AppCompatActivity {
         if(month == 12)
             return "DEC";
         return "JAN";
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        gender = parent.getItemAtPosition(position).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
