@@ -9,33 +9,56 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.delts.shipitfixit.adapter.ShopRecommendationAdapter;
+import com.delts.shipitfixit.database.ShopDBHelper;
+import com.delts.shipitfixit.databinding.FragmentHomeBinding;
 import com.delts.shipitfixit.models.Shop;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
+    FragmentHomeBinding binding;
+    ArrayList<Shop> shops;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-        ArrayList<Shop> shops = new ArrayList<>();
-        // Inflate the layout for this fragment
-        Shop shop = new Shop("Samsung", "Taytay, Rizal", R.drawable.samsung_logo);
-        shops.add(shop);
-        shop = new Shop("Infinix", "Binangonan, Rizal", R.drawable.infinix_logo);
-        shops.add(shop);
-        shop = new Shop("OPPO", "Angono, Rizal", R.drawable.oppo_logo);
-        shops.add(shop);
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
 
-        RecyclerView shopRecyclerView = view.findViewById(R.id.shopRecyclerView);
+        //Will retrieve all shop from the database and apply it to the adapter to inflate recycler view
+        ShopDBHelper shopDBHelper = new ShopDBHelper(getContext());
+        shops = shopDBHelper.retrieveAllShops();
+
+        //Set up of recycler view
         LinearLayoutManager horizontalLinearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        shopRecyclerView.setLayoutManager(horizontalLinearLayoutManager);
+        binding.shopRecyclerView.setLayoutManager(horizontalLinearLayoutManager);
         ShopRecommendationAdapter adapter = new ShopRecommendationAdapter(shops);
-        shopRecyclerView.setAdapter(adapter);
+        binding.shopRecyclerView.setAdapter(adapter);
 
-        return view;
+
+        binding.searchBox.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String name) {
+                ArrayList<Shop> filteredList= new ShopDBHelper(getContext()).retrieveShopByName(name);
+                ShopRecommendationAdapter adapter = new ShopRecommendationAdapter(filteredList);
+                binding.shopRecyclerView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+                return true;
+            }
+        });
+
+        return binding.getRoot();
+    }
+
+    public void filterItems(String name){
+
     }
 }

@@ -83,6 +83,7 @@ public class ShopRecommendationAdapter extends RecyclerView.Adapter<ShopRecommen
         public TextView getShopLocation(){
             return shopLocation;
         }
+        public ImageView getImageView(){ return imageView; }
     }
 
     @NonNull
