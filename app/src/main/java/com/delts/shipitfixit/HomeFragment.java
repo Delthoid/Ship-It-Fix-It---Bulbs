@@ -38,6 +38,12 @@ public class HomeFragment extends Fragment {
         ShopRecommendationAdapter adapter = new ShopRecommendationAdapter(shops);
         binding.shopRecyclerView.setAdapter(adapter);
 
+        binding.searchBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.searchBox.setIconified(false);
+            }
+        });
 
         binding.searchBox.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
