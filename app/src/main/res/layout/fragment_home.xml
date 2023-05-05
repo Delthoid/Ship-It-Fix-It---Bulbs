@@ -12,22 +12,25 @@
 
         <SearchView
             android:id="@+id/searchBox"
-            android:layout_margin="15dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:queryHint="Search brand name"/>
+            android:layout_margin="16dp"
+            android:background="@drawable/rectangle_gray"
+            android:clickable="true"
+            android:queryHint="Search brand name" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25dp"
-            android:text="Shop Recommendation"/>
+            android:layout_marginStart="16dp"
+            android:text="Shop Recommendation"
+            android:textSize="25dp" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/shopRecyclerView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_marginTop="8dp"></androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
 
 

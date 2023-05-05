@@ -1,5 +1,6 @@
 package com.delts.shipitfixit.adapter;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.delts.shipitfixit.R;
 import com.delts.shipitfixit.TransactionInfoFragment;
+import com.delts.shipitfixit.ViewStoreActivity;
 import com.delts.shipitfixit.databinding.FragmentTransactionInfoBinding;
 import com.delts.shipitfixit.databinding.ShopItemBinding;
 import com.delts.shipitfixit.models.Shop;
@@ -54,20 +56,9 @@ public class ShopRecommendationAdapter extends RecyclerView.Adapter<ShopRecommen
                 @Override
                 public void onClick(View v) {
                     Shop shop = shops.get(getAdapterPosition());
-                    Bundle bundle = new Bundle();
-                    bundle.putString("name", shop.getName());
-                    bundle.putString("location", shop.getLocation());
-                    bundle.putInt("image", shop.getImage());
-
-                    TransactionInfoFragment fragment = new TransactionInfoFragment();
-                    fragment.setArguments(bundle);
-
-                    NavHostFragment navHostFragment = (NavHostFragment) ((AppCompatActivity) v.getContext())
-                            .getSupportFragmentManager().findFragmentById(R.id.navigationController);
-                    FragmentTransaction fragmentTransaction = navHostFragment.getChildFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.navigationController, fragment);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
+                    Intent intent = new Intent(v.getContext(), ViewStoreActivity.class);
+                    intent.putExtra("shopName", shop.getName());
+                    v.getContext().startActivity(intent);
                 }
             });
         }
