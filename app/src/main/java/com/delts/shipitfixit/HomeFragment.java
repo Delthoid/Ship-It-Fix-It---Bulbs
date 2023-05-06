@@ -16,6 +16,7 @@ import android.widget.SearchView;
 
 import com.delts.shipitfixit.adapter.ShopRecommendationAdapter;
 import com.delts.shipitfixit.database.ShopDBHelper;
+import com.delts.shipitfixit.database.ShopServicesDBHelper;
 import com.delts.shipitfixit.databinding.FragmentHomeBinding;
 import com.delts.shipitfixit.models.Shop;
 
@@ -34,6 +35,9 @@ public class HomeFragment extends Fragment {
         //Will retrieve all shop from the database and apply it to the adapter to inflate recycler view
         ShopDBHelper shopDBHelper = new ShopDBHelper(getContext());
         shops = shopDBHelper.retrieveAllShops();
+
+        //After adding static shopsm add the services
+        ShopServicesDBHelper shopServicesDBHelper = new ShopServicesDBHelper(getContext());
 
         //Set up of recycler view
         LinearLayoutManager horizontalLinearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -64,6 +68,13 @@ public class HomeFragment extends Fragment {
 
                 binding.shopRecommendationLabel.setText(name.isEmpty() ? "Recommended Shops" : "Results for '" + name + "'");
                 return true;
+            }
+        });
+
+        binding.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shopServicesDBHelper.test();
             }
         });
 

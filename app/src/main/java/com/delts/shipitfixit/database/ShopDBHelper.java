@@ -86,6 +86,7 @@ public class ShopDBHelper extends SQLiteOpenHelper {
 
         while (c.moveToNext()) {
             Shop shop = new Shop();
+            shop.setId(c.getInt(c.getColumnIndexOrThrow(COL_ID)));
             shop.setName(c.getString(c.getColumnIndexOrThrow(COL_NAME)));
             shop.setLocation(c.getString(c.getColumnIndexOrThrow(COL_LOCATION)));
             shop.setImage(c.getInt(c.getColumnIndexOrThrow(COL_IMAGE_SOURCE)));
