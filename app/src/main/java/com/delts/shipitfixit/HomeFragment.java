@@ -1,11 +1,14 @@
 package com.delts.shipitfixit;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +48,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        binding.searchBox.setIconifiedByDefault(false);
         binding.searchBox.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -57,6 +61,8 @@ public class HomeFragment extends Fragment {
                 ShopRecommendationAdapter adapter = new ShopRecommendationAdapter(filteredList);
                 binding.shopRecyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
+
+                binding.shopRecommendationLabel.setText(name.isEmpty() ? "Recommended Shops" : "Results for '" + name + "'");
                 return true;
             }
         });
